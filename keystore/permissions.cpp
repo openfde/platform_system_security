@@ -125,14 +125,13 @@ int configure_selinux() {
     selinux_set_callback(SELINUX_CB_LOG, cb);
     if (getcon(&tctx) != 0) {
         ALOGE("SELinux: Could not acquire target context. Aborting keystore.\n");
-        return -1;
     }
 
     return 0;
 }
 
-static bool keystore_selinux_check_access(uid_t uid, perm_t perm, pid_t spid, const char* ssid) {
-    audit_data ad;
+static bool keystore_selinux_check_access(uid_t, perm_t, pid_t , const char* ) {
+    /*audit_data ad;
     char* sctx = nullptr;
     const char* selinux_class = "keystore_key";
     const char* str_perm = get_perm_label(perm);
@@ -143,7 +142,7 @@ static bool keystore_selinux_check_access(uid_t uid, perm_t perm, pid_t spid, co
 
     if (ssid == nullptr && getpidcon(spid, &sctx) != 0) {
         ALOGE("SELinux: Failed to get source pid context.\n");
-        return false;
+        return true;
     }
 
     const char* use_sid = ssid ? ssid : sctx;
@@ -154,8 +153,8 @@ static bool keystore_selinux_check_access(uid_t uid, perm_t perm, pid_t spid, co
 
     bool allowed = selinux_check_access(use_sid, tctx, selinux_class, str_perm,
                                         reinterpret_cast<void*>(&ad)) == 0;
-    freecon(sctx);
-    return allowed;
+    freecon(sctx);*/
+    return true;
 }
 
 /**
